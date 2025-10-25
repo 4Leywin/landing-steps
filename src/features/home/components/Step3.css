@@ -1,0 +1,85 @@
+/* Styles for Step3 (form) */
+.form-card {
+  padding: 1.1rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+.step-title {
+  margin: 0 0 0.6rem 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+}
+.form-row {
+  margin-bottom: 0.85rem;
+}
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: #e6e6e6;
+  text-align: left;
+}
+.form-input {
+  width: 100%;
+  max-width: 100%;
+  padding: 0.65rem 0.7rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0b1220;
+  color: #fff;
+  resize: none;
+}
+.form-input:focus {
+  box-shadow: 0 8px 22px rgba(83, 91, 242, 0.08);
+  border-color: rgba(100, 108, 255, 0.6);
+  outline: none;
+}
+.form-note {
+  font-size: 0.9rem;
+  color: #cfcfcf;
+  margin-top: 0.75rem;
+}
+.success-banner {
+  background: #e8ffea;
+  padding: 0.9rem;
+  border-radius: 10px;
+  margin-top: 0.9rem;
+  color: #0b5a18;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.primary-btn {
+  background: linear-gradient(90deg, #28c76f, #20a070);
+  color: #05220b;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-weight: 800;
+  box-shadow: 0 14px 36px rgba(32, 160, 112, 0.12);
+}
+.primary-btn:hover {
+  transform: translateY(-2px);
+}
+
+.form-input-range {
+  width: 240px;
+}
+.range-value {
+  min-width: 28px;
+  font-weight: 700;
+  color: #fff;
+}
+.form-error {
+  color: #ffdede;
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+.form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.form-card textarea.form-input {
+  resize: vertical;
+}

@@ -1,0 +1,29 @@
+/* Styles for Step2 */
+.card-center {
+  padding: 1.25rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+.step-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+}
+.description {
+  color: #e6e6e6;
+  margin: 0 0 1rem 0;
+}
+.primary-btn {
+  background: linear-gradient(90deg, #646cff, #535bf2);
+  color: #fff;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 12px 28px rgba(83, 91, 242, 0.12);
+}
+.secondary-txt {
+  color: #bfbfbf;
+  font-size: 0.95rem;
+}
