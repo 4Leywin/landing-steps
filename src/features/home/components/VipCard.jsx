@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import "./VipCard.css";
 
 const initials = (name) => {
@@ -12,48 +12,237 @@ const initials = (name) => {
 };
 
 const VipCard = ({ data = {}, branding = {} }) => {
+  const wrapRef = useRef(null);
   const { name, telefono, email, visits } = data || {};
+  const code = telefono
+    ? `#${telefono.toString().slice(-6)}`
+    : name
+    ? `#${initials(name).padEnd(6, "X")}`
+    : "#000000";
+
+  const behind =
+    "radial-gradient(farthest-side circle at 20% 20%, rgba(255,120,120,0.06) 0%, transparent 18%), radial-gradient(40% 60% at 80% 80%, rgba(0,255,200,0.03), transparent 40%)";
+  const inner = "linear-gradient(145deg,#2b0f14cc 0%,#3b1e23aa 100%)";
+
+  // attach interactions
+  useVipInteractions(wrapRef);
 
   return (
-    <div className="vip-card" aria-live="polite">
-      <div className="vip-header">
-        <div className="vip-avatar">{initials(name || branding.nombre)}</div>
-        <div className="vip-meta">
-          <div className="vip-badge">CLIENTE VIP</div>
-          <div className="vip-brand">{branding?.nombre}</div>
-        </div>
-      </div>
+    <div
+      ref={wrapRef}
+      className="vip-wrapper"
+      style={{
+        "--behind-gradient": behind,
+        "--inner-gradient": inner,
+        "--pointer-x": "50%",
+        "--pointer-y": "50%",
+        "--background-x": "50%",
+        "--background-y": "50%",
+        "--card-opacity": 0,
+      }}
+      aria-live="polite"
+    >
+      <article className="vip-card">
+        <div className="vip-inside">
+          <div className="vip-shine" />
+          <div className="vip-glare" />
 
-      <div className="vip-body">
-        <div className="vip-name">{name || "Nombre no disponible"}</div>
-        <div className="vip-rows">
-          {telefono && (
-            <div className="vip-row">
-              <span className="vip-row-key">Teléfono</span>
-              <span className="vip-row-value">{telefono}</span>
+          <div className="vip-content">
+            <div className="vip-header">
+              <div className="vip-avatar">
+                {initials(name || branding.nombre)}
+              </div>
+              <div className="vip-meta">
+                <div className="vip-badge">CLIENTE VIP</div>
+                <div className="vip-brand">{branding?.nombre}</div>
+              </div>
             </div>
-          )}
-          {email && (
-            <div className="vip-row">
-              <span className="vip-row-key">Email</span>
-              <span className="vip-row-value">{email}</span>
-            </div>
-          )}
-          {visits && (
-            <div className="vip-row">
-              <span className="vip-row-key">Visitas</span>
-              <span className="vip-row-value">{visits}</span>
-            </div>
-          )}
-        </div>
-      </div>
 
-      <div className="vip-footer">
-        <button className="vip-btn">Descargar credencial</button>
-        <div className="vip-quiet">Válido hasta 31/12/2025</div>
-      </div>
+            <div className="vip-body">
+              <div className="vip-name">{name || "Nombre no disponible"}</div>
+              <div className="vip-rows">
+                {telefono && (
+                  <div className="vip-row">
+                    <span className="vip-row-key">Teléfono</span>
+                    <span className="vip-row-value">{telefono}</span>
+                  </div>
+                )}
+                {email && (
+                  <div className="vip-row">
+                    <span className="vip-row-key">Email</span>
+                    <span className="vip-row-value">{email}</span>
+                  </div>
+                )}
+                {visits && (
+                  <div className="vip-row">
+                    <span className="vip-row-key">Visitas</span>
+                    <span className="vip-row-value">{visits}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="vip-footer">
+              <div className="vip-left">
+                <div className="vip-chip" aria-hidden="true"></div>
+                <div className="vip-code">{code}</div>
+              </div>
+              <div className="vip-quiet">Válido hasta 31/12/2025</div>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   );
 };
+
+// ----- INTERACTION LOGIC -----
+// Attach pointer/device interactions to the wrapper and update CSS variables
+function useVipInteractions(wrapperRef) {
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    const wrap = wrapperRef.current;
+    if (!wrap) return;
+
+    // respect reduced motion
+    const reduced =
+      typeof window !== "undefined" && window.matchMedia
+        ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        : false;
+    if (reduced) return;
+
+    const updateVars = (wrapEl, props) => {
+      if (!wrapEl) return;
+      Object.entries(props).forEach(([k, v]) => wrapEl.style.setProperty(k, v));
+    };
+
+    const handlePointer = (e) => {
+      const card = wrap.querySelector(".vip-card");
+      if (!wrap || !card) return;
+      const rect = card.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left;
+      const offsetY = e.clientY - rect.top;
+      const percentX = Math.min(Math.max((100 / rect.width) * offsetX, 0), 100);
+      const percentY = Math.min(
+        Math.max((100 / rect.height) * offsetY, 0),
+        100
+      );
+      const centerX = percentX - 50;
+      const centerY = percentY - 50;
+
+      const props = {
+        "--pointer-x": `${percentX}%`,
+        "--pointer-y": `${percentY}%`,
+        "--background-x": `${Math.min(
+          90,
+          Math.max(10, 35 + (percentX - 50) * 0.6)
+        )}%`,
+        "--background-y": `${Math.min(
+          90,
+          Math.max(10, 35 + (percentY - 50) * 0.6)
+        )}%`,
+        "--pointer-from-center": `${Math.min(
+          1,
+          Math.hypot(centerX, centerY) / 50
+        )}`,
+        "--pointer-from-top": `${percentY / 100}`,
+        "--pointer-from-left": `${percentX / 100}`,
+        "--rotate-x": `${(centerY / 3).toFixed(2)}deg`,
+        "--rotate-y": `${(-centerX / 3).toFixed(2)}deg`,
+      };
+
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => updateVars(wrap, props));
+    };
+
+    const handleEnter = (e) => {
+      if (!wrap) return;
+      wrap.classList.add("active");
+      handlePointer(e);
+    };
+
+    const handleLeave = () => {
+      if (!wrap) return;
+      const card = wrap.querySelector(".vip-card");
+      if (!card) return;
+
+      const startX =
+        parseFloat(
+          (
+            getComputedStyle(wrap).getPropertyValue("--pointer-x") || "50"
+          ).replace("%", "")
+        ) || 50;
+      const startY =
+        parseFloat(
+          (
+            getComputedStyle(wrap).getPropertyValue("--pointer-y") || "50"
+          ).replace("%", "")
+        ) || 50;
+      const startTime = performance.now();
+      const dur = 450;
+
+      const animate = (now) => {
+        const t = Math.min(1, (now - startTime) / dur);
+        const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        const curX = startX + (50 - startX) * ease;
+        const curY = startY + (50 - startY) * ease;
+        updateVars(wrap, {
+          "--pointer-x": `${curX}%`,
+          "--pointer-y": `${curY}%`,
+          "--background-x": `50%`,
+          "--background-y": `50%`,
+          "--pointer-from-center": `0`,
+          "--rotate-x": `0deg`,
+          "--rotate-y": `0deg`,
+        });
+
+        if (t < 1) rafRef.current = requestAnimationFrame(animate);
+      };
+
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(animate);
+      wrap.classList.remove("active");
+    };
+
+    const handleDevice = (ev) => {
+      const card = wrap.querySelector(".vip-card");
+      if (!wrap || !card) return;
+      const { beta, gamma } = ev;
+      if (typeof beta !== "number" || typeof gamma !== "number") return;
+      const ox = ((gamma + 90) / 180) * card.clientWidth;
+      const oy = ((beta + 90) / 180) * card.clientHeight;
+      const fake = {
+        clientX: card.getBoundingClientRect().left + ox,
+        clientY: card.getBoundingClientRect().top + oy,
+      };
+      handlePointer(fake);
+    };
+
+    const card = wrap.querySelector(".vip-card");
+    if (!card) return;
+
+    card.addEventListener("pointermove", handlePointer);
+    card.addEventListener("pointerenter", handleEnter);
+    card.addEventListener("pointerleave", handleLeave);
+    window.addEventListener("deviceorientation", handleDevice);
+
+    // initialize
+    updateVars(wrap, {
+      "--pointer-x": "50%",
+      "--pointer-y": "50%",
+      "--rotate-x": "0deg",
+      "--rotate-y": "0deg",
+    });
+
+    return () => {
+      card.removeEventListener("pointermove", handlePointer);
+      card.removeEventListener("pointerenter", handleEnter);
+      card.removeEventListener("pointerleave", handleLeave);
+      window.removeEventListener("deviceorientation", handleDevice);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [wrapperRef]);
+}
 
 export default VipCard;

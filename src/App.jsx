@@ -4,6 +4,7 @@ import Step1 from "./features/home/components/Step1";
 import Step2 from "./features/home/components/Step2";
 import Step3 from "./features/home/components/Step3";
 import Step4 from "./features/home/components/Step4";
+import ProfileCard from "./components/ProfileCard";
 
 function App() {
   const steps = [Step1, Step2, Step3, Step4];
