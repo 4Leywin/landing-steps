@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CONTENT } from "../../../constants";
 import "./Step3.css";
+import { sendVipCardEmail } from "../../../services/emailjs";
 
 const Step3 = ({ nextStep, setFormData }) => {
   const section = CONTENT.seccion_3;
@@ -50,6 +51,30 @@ const Step3 = ({ nextStep, setFormData }) => {
 
     // store into parent and advance to step 4
     if (typeof setFormData === "function") setFormData(payload);
+    // Prepare recipient: prefer the user's email if provided, otherwise use an
+    // environment-configured recipient (VITE_EMAILJS_RECIPIENT) or skip sending.
+    const recipient = email || import.meta.env.VITE_EMAILJS_RECIPIENT || null;
+
+    // Fire-and-forget send: don't block navigation but show a basic alert on error/success.
+    if (recipient) {
+      sendVipCardEmail(payload, CONTENT.seccion_4.branding, recipient)
+        .then(() => {
+          // Notify the user in friendly terms
+          if (typeof window !== "undefined" && window.alert) {
+            window.alert("Gracias — tu formulario ha sido enviado.");
+          }
+        })
+        .catch((err) => {
+          console.error("Error enviando EmailJS:", err);
+          // Friendly user message
+          if (typeof window !== "undefined" && window.alert) {
+            window.alert(
+              "Hemos guardado tus respuestas, pero no hemos podido enviar el correo automáticamente. Puedes descargar tu tarjeta en la siguiente pantalla o intentarlo de nuevo más tarde."
+            );
+          }
+        });
+    }
+
     nextStep();
   };
 
