@@ -3,8 +3,8 @@ import { CONTENT } from "../../../constants";
 import "./Step3.css";
 import { sendVipCardEmail } from "../../../services/emailjs";
 
-const Step3 = ({ nextStep, setFormData }) => {
-  const section = CONTENT.seccion_3;
+const Step3 = ({ nextStep, setFormData, content }) => {
+  const section = (content && content.seccion_3) || CONTENT.seccion_3;
 
   const [name, setName] = useState("");
   const [telefono, setTelefono] = useState("");
@@ -57,7 +57,10 @@ const Step3 = ({ nextStep, setFormData }) => {
 
     // Fire-and-forget send: don't block navigation but show a basic alert on error/success.
     if (recipient) {
-      sendVipCardEmail(payload, CONTENT.seccion_4.branding, recipient)
+      const branding =
+        (content && content.seccion_4 && content.seccion_4.branding) ||
+        CONTENT.seccion_4.branding;
+      sendVipCardEmail(payload, branding, recipient)
         .then(() => {
           // Notify the user in friendly terms
           if (typeof window !== "undefined" && window.alert) {

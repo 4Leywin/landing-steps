@@ -293,6 +293,9 @@ export default function AdminPage() {
                 onChange={(e) =>
                   updatePath("seccion_2.src.type", e.target.value)
                 }
+                style={{
+                  background: "black",
+                }}
               >
                 <option value="video">Video</option>
                 <option value="image">Imagen</option>

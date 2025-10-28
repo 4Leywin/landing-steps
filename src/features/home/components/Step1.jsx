@@ -1,8 +1,8 @@
 import { CONTENT } from "../../../constants";
 import "./Step1.css";
 
-const Step1 = ({ nextStep }) => {
-  const s = CONTENT.seccion_1;
+const Step1 = ({ nextStep, content }) => {
+  const s = (content && content.seccion_1) || CONTENT.seccion_1;
   return (
     <div className="hero">
       <div>

@@ -2,8 +2,9 @@ import { CONTENT } from "../../../constants";
 import "./Step4.css";
 import VipCard from "./VipCard";
 
-const Step4 = ({ formData }) => {
-  const { beneficio_extra, branding } = CONTENT.seccion_4;
+const Step4 = ({ formData, content }) => {
+  const { beneficio_extra, branding } =
+    (content && content.seccion_4) || CONTENT.seccion_4;
 
   return (
     <div className="result-card">

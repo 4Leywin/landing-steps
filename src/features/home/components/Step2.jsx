@@ -1,8 +1,9 @@
 import { CONTENT } from "../../../constants";
 import "./Step2.css";
 
-const Step2 = ({ nextStep }) => {
-  const { titulo, descripcion, accion, src } = CONTENT.seccion_2;
+const Step2 = ({ nextStep, content }) => {
+  const { titulo, descripcion, accion, src } =
+    (content && content.seccion_2) || CONTENT.seccion_2;
 
   return (
     <div className="card-center">
