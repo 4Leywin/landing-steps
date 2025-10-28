@@ -213,8 +213,16 @@ function useVipInteractions(wrapperRef) {
         "--pointer-from-top": `${percentY / 100}`,
         "--pointer-from-left": `${percentX / 100}`,
         // clamp rotations to avoid extreme angles on very small cards
-        "--rotate-x": `${clamp((centerY / rotateFactor).toFixed(2), -12, 12)}deg`,
-        "--rotate-y": `${clamp((-centerX / rotateFactor).toFixed(2), -12, 12)}deg`,
+        "--rotate-x": `${clamp(
+          (centerY / rotateFactor).toFixed(2),
+          -12,
+          12
+        )}deg`,
+        "--rotate-y": `${clamp(
+          (-centerX / rotateFactor).toFixed(2),
+          -12,
+          12
+        )}deg`,
       };
 
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
