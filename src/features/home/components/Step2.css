@@ -1,9 +1,15 @@
 /* Styles for Step2 */
 .card-center {
-  padding: 1.25rem;
-  border-radius: 10px;
+  padding: 1rem;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 .step-title {
   margin: 0 0 0.5rem 0;
@@ -26,4 +32,54 @@
 .secondary-txt {
   color: #bfbfbf;
   font-size: 0.95rem;
+}
+
+/* Media container styles (image / video) */
+.image-container,
+.video-container {
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
+  object-fit: contain;
+  overflow: hidden;
+  box-shadow: 0 14px 30px rgba(2, 6, 23, 0.35);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.06));
+}
+.promo-image,
+.promo-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  aspect-ratio: 16/9;
+}
+.promo-video {
+  background: #000;
+}
+
+@media (min-width: 760px) {
+  /* Keep vertical flow on wide screens; only constrain media height */
+  .image-container,
+  .video-container {
+    max-height: 520px;
+  }
+}
+@media (max-width: 520px) {
+  .step-title {
+    font-size: 1.1rem;
+  }
+  .primary-btn {
+    width: 100%;
+  }
+  .promo-image,
+  .promo-video {
+    aspect-ratio: 4/3;
+  }
+}
+
+/* subtle hover/interaction for media */
+.image-container:hover .promo-image,
+.video-container:hover .promo-video {
+  transform: scale(1.03);
+  transition: transform 420ms cubic-bezier(0.2, 0.9, 0.2, 1);
 }

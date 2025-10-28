@@ -1,0 +1,66 @@
+.auth-root {
+  /* page-based layout: full-height section that sits in the normal flow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  min-height: 100vh;
+  width: 100%;
+  background: transparent;
+}
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.auth-title {
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem 0;
+  color: #fff;
+}
+.auth-label {
+  font-size: 0.85rem;
+  color: #cfd9ff;
+  text-align: left;
+  font-weight: bold;
+}
+.auth-input {
+  padding: 0.65rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: transparent;
+  color: #fff;
+}
+.auth-cta {
+  margin-top: 0.5rem;
+  padding: 0.7rem;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #5969ff, #3f49f0);
+  color: #fff;
+  border: 0;
+  font-weight: 700;
+}
+.auth-error {
+  background: rgba(255, 80, 80, 0.07);
+  color: #ffdede;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 1rem;
+  }
+}

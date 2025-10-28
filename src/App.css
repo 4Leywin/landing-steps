@@ -2,6 +2,15 @@
   max-width: 1280px;
   margin: 0 auto;
   text-align: center;
+  width: 100%;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo {
@@ -41,17 +50,11 @@
 }
 
 /* App specific styles for steps UI */
-.App {
+.home {
   max-width: 720px;
   margin: 3rem auto;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.02),
-    rgba(255, 255, 255, 0.01)
-  );
   border-radius: 12px;
   padding: 1rem;
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.45);
   color: inherit;
 }
 
@@ -74,19 +77,7 @@
   gap: 1rem;
 }
 
-@media (prefers-color-scheme: light) {
-  .App {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  }
-  .step-card {
-    background: #fff;
-    color: #111;
-  }
-  .form-input {
-    background: #fff;
-    border: 1px solid #ddd;
-  }
-}
+/* Unified single theme: removed prefers-color-scheme overrides to keep one consistent appearance */
 
 /* Refinements: variables, progress bar, animations */
 :root {
@@ -100,11 +91,6 @@
 
 body {
   background: linear-gradient(180deg, var(--bg-start), var(--bg-end));
-}
-
-.App {
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(6px) saturate(120%);
 }
 
 .app-progress {
@@ -128,8 +114,7 @@ body {
 
 @media (max-width: 520px) {
   .App {
-    margin: 1rem;
-    padding: 1rem;
+    padding: 0rem;
   }
   .app-header {
     flex-direction: column;

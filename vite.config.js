@@ -7,6 +7,10 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": "/src",
+      "@components": "/src/components",
+      "@features": "/src/features",
+      "@services": "/src/services",
+      "@constants": "/src/constants",
     },
   },
 });

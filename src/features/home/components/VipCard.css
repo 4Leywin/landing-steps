@@ -72,8 +72,9 @@
   position: absolute;
   inset: -20%;
   background: var(--behind-gradient);
-  filter: blur(36px) saturate(120%);
-  opacity: 0.9;
+  /* softer aura: smaller blur and lower opacity so it doesn't feel like a heavy blur */
+  filter: blur(14px) saturate(110%);
+  opacity: 0.6;
   pointer-events: none;
   transform: translateZ(0);
 }
@@ -172,6 +173,34 @@
 .vip-content {
   position: relative;
   z-index: 2;
+}
+
+/* controls that sit outside the card visual so the card layout isn't affected */
+.vip-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.vip-download-btn {
+  background: linear-gradient(180deg, #ffd166, #ffb16a);
+  color: #081224;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.12);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.vip-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.16);
+}
+
+.vip-download-btn:active {
+  transform: translateY(0);
 }
 
 .vip-header {
@@ -383,10 +412,23 @@
   }
 }
 
-/* hover control for inner shine/glare */
+/* hover control for inner shine/glare: keep a subtle effect but avoid heavy blur/glare
+   which makes the card unreadable. We lower the opacity variable and tone down
+   the pseudo-element on hover for readability. */
 .vip-wrapper:hover,
 .vip-wrapper.active {
-  --card-opacity: 1;
+  --card-opacity: 0.34; /* lower global intensity on hover */
+}
+
+/* reduce aura blur and shimmer on hover so text remains readable */
+.vip-wrapper:hover .vip-card::before {
+  filter: blur(6px) saturate(105%);
+  opacity: 0.18;
+}
+
+.vip-wrapper:hover .vip-shine,
+.vip-wrapper:hover .vip-glare {
+  opacity: 0.18 !important;
 }
 
 /* subtle floating for the inner layer only (so transform on .vip-card can control rotation) */
@@ -404,16 +446,97 @@
 }
 
 @media (max-width: 520px) {
+  /* Make the card adapt to narrow viewports: full width, simpler visuals */
   .vip-wrapper {
     padding: 6px;
+    max-width: calc(100% - 12px);
+    margin: 1rem auto;
+    perspective: none;
   }
-  .vip-avatar {
-    width: 56px;
-    height: 56px;
-    font-size: 18px;
+
+  .vip-card {
+    transform: none !important;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.35);
     border-radius: 12px;
+    transition: none;
   }
+
+  .vip-card:hover {
+    transform: none !important;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.35);
+  }
+
+  /* reduce inner padding and disable floaty animation for stability */
+  .vip-inside {
+    padding: 12px;
+    animation: none;
+  }
+
+  /* hide heavy visual layers that can interfere on mobile */
+  .vip-shine,
+  .vip-glare,
+  .vip-card::before {
+    display: none;
+    opacity: 0 !important;
+  }
+
+  .vip-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
   .vip-name {
-    font-size: 18px;
+    font-size: 16px;
+    line-height: 1.1;
+  }
+
+  .vip-rows {
+    gap: 6px;
+  }
+
+  .vip-row-key {
+    font-size: 12px;
+  }
+
+  .vip-row-value {
+    font-size: 14px;
+  }
+
+  .vip-chip {
+    width: 34px;
+    height: 22px;
+    border-radius: 4px;
+  }
+
+  .vip-code {
+    font-size: 16px;
+  }
+
+  .vip-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .vip-download-btn {
+    background: linear-gradient(180deg, #ffd166, #ff9a45);
+    color: #081224;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(2, 6, 23, 0.12);
+  }
+
+  .vip-download-btn:active {
+    transform: translateY(1px);
+  }
+
+  /* reduce grain overlay on mobile to avoid visual noise */
+  .vip-card .grain {
+    opacity: 0.03;
   }
 }

@@ -1,4 +1,4 @@
-export const CONTENT = {
+const DEFAULT_CONTENT = {
   seccion_1: {
     titulo: "Tarjeta VIP",
     subtitulo: "Tu fidelidad se convierte en privilegio",
@@ -15,6 +15,10 @@ export const CONTENT = {
       "Solo llena este formulario de Fidelización y una mini encuesta .",
     accion: {
       texto_boton: "Quiero inscribirme ahora",
+    },
+    src: {
+      type: "video",
+      url: "https://youtu.be/5ZR6wWhQJ6I",
     },
   },
   seccion_3: {
@@ -36,3 +40,24 @@ export const CONTENT = {
     },
   },
 };
+
+// Allow an admin to override content at runtime by saving a JSON string
+// under localStorage key `content_override`. This makes it possible to
+// edit content from an admin page without editing source files.
+function loadContent() {
+  try {
+    const raw = window.localStorage.getItem("content_override");
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // If parsed looks valid, return it. Otherwise fall back to default.
+      if (parsed && typeof parsed === "object") return parsed;
+    }
+  } catch (e) {
+    // ignore parse errors and fall back to default
+    // eslint-disable-next-line no-console
+    console.warn("Failed to parse content_override from localStorage:", e);
+  }
+  return DEFAULT_CONTENT;
+}
+
+export const CONTENT = loadContent();
