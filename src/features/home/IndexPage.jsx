@@ -29,6 +29,7 @@ const IndexPage = () => {
           const merged = { ...DEFAULT_CONTENT, ...doc };
           delete merged.id;
           setContent(merged);
+          console.log("Loaded content from Firestore:", merged);
         }
       } catch (err) {
         // silently ignore: keep DEFAULT_CONTENT
@@ -58,7 +59,7 @@ const IndexPage = () => {
         }}
       >
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <div className="app-title">Luxury Star Spa</div>
+          <div className="app-title">{content.seccion_4.branding.nombre}</div>
           <div className="app-progress">
             Paso {currentStep + 1} de {total}
           </div>

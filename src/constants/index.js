@@ -1,4 +1,6 @@
 const DEFAULT_CONTENT = {
+  // site-level editable title shown in header
+  site_title: "Luxury Star Spa",
   seccion_1: {
     titulo: "Tarjeta VIP",
     subtitulo: "Tu fidelidad se convierte en privilegio",
@@ -33,6 +35,7 @@ const DEFAULT_CONTENT = {
       descripcion:
         "Puedes ir en cualquier día de la semana y disfrutar. Si agendas HOY, podrás venir cualquier día de la semana y disfrutar de un beneficio extra: AMBIENTE PREMIUM sin un coste alguno, disponible para ti hasta fin de año.",
       boton: "Cliente VIP + Ambiente Premium",
+      expiry_date: "31/12/2025",
     },
     branding: {
       nombre: "Luxury Star Spa",
@@ -54,7 +57,6 @@ function loadContent() {
     }
   } catch (e) {
     // ignore parse errors and fall back to default
-    // eslint-disable-next-line no-console
     console.warn("Failed to parse content_override from localStorage:", e);
   }
   return DEFAULT_CONTENT;

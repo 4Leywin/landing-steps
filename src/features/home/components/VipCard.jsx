@@ -12,7 +12,7 @@ const initials = (name) => {
     .toUpperCase();
 };
 
-const VipCard = ({ data = {}, branding = {} }) => {
+const VipCard = ({ data = {}, branding = {}, validUntil }) => {
   const wrapRef = useRef(null);
   const { name, telefono, email, visits } = data || {};
   const code = telefono
@@ -121,7 +121,13 @@ const VipCard = ({ data = {}, branding = {} }) => {
                 <div className="vip-chip" aria-hidden="true"></div>
                 <div className="vip-code">{code}</div>
               </div>
-              <div className="vip-quiet">Válido hasta 31/12/2025</div>
+              <div className="vip-quiet">
+                Válido hasta{" "}
+                {branding?.expiry_date ||
+                  branding?.valid_until ||
+                  validUntil ||
+                  "31/12/2025"}
+              </div>
             </div>
           </div>
         </div>

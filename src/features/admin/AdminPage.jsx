@@ -239,6 +239,16 @@ export default function AdminPage() {
         </div>
         {renderStatus()}
 
+        {/* Site title editable */}
+        <div style={{ margin: "12px 0" }}>
+          <label>Site title (cabecera)</label>
+          <input
+            className="admin-input"
+            value={content.site_title || ""}
+            onChange={(e) => updatePath("site_title", e.target.value)}
+          />
+        </div>
+
         <div>
           <div className="admin-grid">
             <div className="admin-section">
@@ -265,6 +275,14 @@ export default function AdminPage() {
                   updatePath("seccion_1.descripcion", e.target.value)
                 }
                 rows={5}
+              />
+              <label>Texto del botón</label>
+              <input
+                className="admin-input"
+                value={content.seccion_1?.accion?.texto_boton || ""}
+                onChange={(e) =>
+                  updatePath("seccion_1.accion.texto_boton", e.target.value)
+                }
               />
             </div>
 
@@ -308,6 +326,15 @@ export default function AdminPage() {
                 value={content.seccion_2.src?.url || ""}
                 onChange={(e) =>
                   updatePath("seccion_2.src.url", e.target.value)
+                }
+              />
+
+              <label>Texto del botón</label>
+              <input
+                className="admin-input"
+                value={content.seccion_2?.accion?.texto_boton || ""}
+                onChange={(e) =>
+                  updatePath("seccion_2.accion.texto_boton", e.target.value)
                 }
               />
 
@@ -359,6 +386,61 @@ export default function AdminPage() {
                 value={content.seccion_3.mensaje_exito || ""}
                 onChange={(e) =>
                   updatePath("seccion_3.mensaje_exito", e.target.value)
+                }
+              />
+            </div>
+
+            <div className="admin-section" style={{ marginTop: 12 }}>
+              <h3>Sección 4 (beneficio + branding)</h3>
+              <label>Descripción del beneficio</label>
+              <textarea
+                className="admin-textarea"
+                value={content.seccion_4?.beneficio_extra?.descripcion || ""}
+                onChange={(e) =>
+                  updatePath(
+                    "seccion_4.beneficio_extra.descripcion",
+                    e.target.value
+                  )
+                }
+                rows={4}
+              />
+
+              <label>Texto del botón (beneficio)</label>
+              <input
+                className="admin-input"
+                value={content.seccion_4?.beneficio_extra?.boton || ""}
+                onChange={(e) =>
+                  updatePath("seccion_4.beneficio_extra.boton", e.target.value)
+                }
+              />
+
+              <label>Fecha de validez (dd/mm/yyyy)</label>
+              <input
+                className="admin-input"
+                value={content.seccion_4?.beneficio_extra?.expiry_date || ""}
+                onChange={(e) =>
+                  updatePath(
+                    "seccion_4.beneficio_extra.expiry_date",
+                    e.target.value
+                  )
+                }
+              />
+
+              <label>Brand nombre</label>
+              <input
+                className="admin-input"
+                value={content.seccion_4?.branding?.nombre || ""}
+                onChange={(e) =>
+                  updatePath("seccion_4.branding.nombre", e.target.value)
+                }
+              />
+
+              <label>Brand logo (texto o URL)</label>
+              <input
+                className="admin-input"
+                value={content.seccion_4?.branding?.logo || ""}
+                onChange={(e) =>
+                  updatePath("seccion_4.branding.logo", e.target.value)
                 }
               />
             </div>

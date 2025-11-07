@@ -11,7 +11,10 @@ const Step3 = ({ nextStep, setFormData, content }) => {
   const [email, setEmail] = useState("");
   const [visits, setVisits] = useState("");
   const [whatsapp, setWhatsapp] = useState("no");
-  const [therapist, setTherapist] = useState(8);
+  const [therapist, setTherapist] = useState({
+    rating: 8,
+    name: "",
+  });
   const [receptionist, setReceptionist] = useState(8);
   const [comment, setComment] = useState("");
   const [opinion, setOpinion] = useState("");
@@ -43,7 +46,7 @@ const Step3 = ({ nextStep, setFormData, content }) => {
       email,
       visits,
       whatsapp,
-      therapist,
+      therapist: `${therapist.name},  ${therapist.rating}`,
       receptionist,
       comment,
       opinion,
@@ -171,11 +174,22 @@ const Step3 = ({ nextStep, setFormData, content }) => {
               type="range"
               min="1"
               max="10"
-              value={therapist}
-              onChange={(e) => setTherapist(Number(e.target.value))}
+              value={therapist.rating}
+              onChange={(e) =>
+                setTherapist({ ...therapist, rating: Number(e.target.value) })
+              }
               className="form-input-range"
             />
-            <div className="range-value">{therapist}</div>
+            <div className="range-value">{therapist.rating}</div>
+            <input
+              type="text"
+              value={therapist.name || ""}
+              className="form-input"
+              placeholder="Nombre de la terapeuta"
+              onChange={(e) =>
+                setTherapist({ ...therapist, name: e.target.value })
+              }
+            />
           </div>
         </div>
 

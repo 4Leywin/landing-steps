@@ -9,7 +9,11 @@ const Step4 = ({ formData, content }) => {
   return (
     <div className="result-card">
       {formData ? (
-        <VipCard data={formData} branding={branding} />
+        <VipCard
+          data={formData}
+          branding={branding}
+          validUntil={beneficio_extra?.expiry_date}
+        />
       ) : (
         <h2 className="step-title">{branding?.nombre}</h2>
       )}
