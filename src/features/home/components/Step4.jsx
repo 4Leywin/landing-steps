@@ -28,7 +28,18 @@ const Step4 = ({ formData, content }) => {
           justifyContent: "center",
         }}
       >
-        <span className="benefit-badge">{beneficio_extra?.boton}</span>
+        {beneficio_extra?.url ? (
+          <a
+            href={beneficio_extra.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="benefit-badge benefit-button"
+          >
+            {beneficio_extra?.boton}
+          </a>
+        ) : (
+          <span className="benefit-badge">{beneficio_extra?.boton}</span>
+        )}
       </div>
 
       <div className="branding">{branding?.logo}</div>

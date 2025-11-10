@@ -35,6 +35,7 @@ const DEFAULT_CONTENT = {
       descripcion:
         "Puedes ir en cualquier día de la semana y disfrutar. Si agendas HOY, podrás venir cualquier día de la semana y disfrutar de un beneficio extra: AMBIENTE PREMIUM sin un coste alguno, disponible para ti hasta fin de año.",
       boton: "Cliente VIP + Ambiente Premium",
+      url: "https://wa.me/51999999999",
       expiry_date: "31/12/2025",
     },
     branding: {

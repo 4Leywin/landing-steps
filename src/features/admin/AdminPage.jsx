@@ -14,7 +14,6 @@ export default function AdminPage() {
   const [content, setContent] = useState(() =>
     JSON.parse(JSON.stringify(DEFAULT_CONTENT))
   );
-  const [status, setStatus] = useState(null);
   const [statusObj, setStatusObj] = useState(null);
   const statusTimer = React.useRef(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -48,12 +47,9 @@ export default function AdminPage() {
       statusTimer.current = null;
     }
     setStatusObj({ type, message });
-    // also set plain status for backward compat where used
-    setStatus(message);
     if (ms > 0) {
       statusTimer.current = setTimeout(() => {
         setStatusObj(null);
-        setStatus(null);
         statusTimer.current = null;
       }, ms);
     }
@@ -191,7 +187,6 @@ export default function AdminPage() {
             onClick={() => {
               if (statusTimer.current) clearTimeout(statusTimer.current);
               setStatusObj(null);
-              setStatus(null);
             }}
             aria-label="Cerrar"
           >
@@ -412,6 +407,17 @@ export default function AdminPage() {
                 onChange={(e) =>
                   updatePath("seccion_4.beneficio_extra.boton", e.target.value)
                 }
+              />
+
+              <label>URL del botón (WhatsApp, reserva online, etc.)</label>
+              <input
+                className="admin-input"
+                type="url"
+                value={content.seccion_4?.beneficio_extra?.url || ""}
+                onChange={(e) =>
+                  updatePath("seccion_4.beneficio_extra.url", e.target.value)
+                }
+                placeholder="https://wa.me/51999999999"
               />
 
               <label>Fecha de validez (dd/mm/yyyy)</label>

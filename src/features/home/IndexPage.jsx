@@ -10,7 +10,7 @@ import { CONTENT as DEFAULT_CONTENT } from "../../constants";
 
 const IndexPage = () => {
   const steps = [Step1, Step2, Step3, Step4];
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(3);
   const [formData, setFormData] = useState(null);
   const [content, setContent] = useState(() =>
     JSON.parse(JSON.stringify(DEFAULT_CONTENT))
