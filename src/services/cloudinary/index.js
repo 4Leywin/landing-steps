@@ -12,8 +12,8 @@ export async function uploadImageFile(file, folder) {
       throw new Error(`Error uploading image: ${response.statusText}`);
     }
     const data = await response.json();
-    // Devuelve la URL y los metadatos relevantes
-    return data;
+    // Devuelve solo la URL del archivo subido
+    return data.url;
   } catch (error) {
     console.error("Error uploading image:", error);
     throw error;
@@ -32,7 +32,7 @@ export async function uploadVideoFile(file, folder) {
       throw new Error(`Error uploading video: ${response.statusText}`);
     }
     const data = await response.json();
-    return data;
+    return data.url;
   } catch (error) {
     console.error("Error uploading video:", error);
     throw error;
