@@ -4,6 +4,7 @@ import { CONTENT as DEFAULT_CONTENT } from "../../constants";
 import {
   uploadImageFile,
   uploadVideoFile,
+  toSecureUrl,
 } from "../../services/cloudinary/index";
 import "./admin.css";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +34,9 @@ export default function AdminPage() {
       cur = cur[p];
     }
 
-    cur[parts[parts.length - 1]] = value;
+    const finalValue =
+      path === "seccion_2.src.url" ? toSecureUrl(value) : value;
+    cur[parts[parts.length - 1]] = finalValue;
     setContent(next);
   }
 
@@ -350,9 +353,15 @@ export default function AdminPage() {
                 <div className="media-wrap">
                   {content.seccion_2.src?.url ? (
                     content.seccion_2.src.type === "video" ? (
-                      <video src={content.seccion_2.src.url} controls />
+                      <video
+                        src={toSecureUrl(content.seccion_2.src.url)}
+                        controls
+                      />
                     ) : (
-                      <img src={content.seccion_2.src.url} alt="preview" />
+                      <img
+                        src={toSecureUrl(content.seccion_2.src.url)}
+                        alt="preview"
+                      />
                     )
                   ) : (
                     <div className="admin-note">No hay media</div>
