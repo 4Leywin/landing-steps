@@ -354,11 +354,14 @@ export default function AdminPage() {
                   {content.seccion_2.src?.url ? (
                     content.seccion_2.src.type === "video" ? (
                       <video
+                        key={content.seccion_2.src.url}
                         src={toSecureUrl(content.seccion_2.src.url)}
                         controls
+                        preload="auto"
                       />
                     ) : (
                       <img
+                        key={content.seccion_2.src.url}
                         src={toSecureUrl(content.seccion_2.src.url)}
                         alt="preview"
                       />

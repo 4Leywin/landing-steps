@@ -11,15 +11,26 @@ const Step2 = ({ nextStep, content }) => {
     <div className="card-center">
       {src && src.type === "image" && (
         <div className="image-container">
-          <img src={mediaUrl} alt="Promotional" className="promo-image" />
+          <img
+            key={mediaUrl}
+            src={mediaUrl}
+            alt="Promotional"
+            className="promo-image"
+          />
         </div>
       )}
       {src && src.type === "video" && (
         <div className="video-container">
-          <video controls className="promo-video" autoPlay muted loop>
-            <source src={mediaUrl} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <video
+            key={mediaUrl}
+            controls
+            className="promo-video"
+            autoPlay
+            muted
+            loop
+            src={mediaUrl}
+            preload="auto"
+          />
         </div>
       )}
       <h2 className="step-title">{titulo}</h2>
